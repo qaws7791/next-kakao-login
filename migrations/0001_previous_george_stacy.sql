@@ -1,0 +1,1 @@
+ALTER TABLE "users" ALTER COLUMN "kakao_id" SET DATA TYPE bigint;
