@@ -1,15 +1,16 @@
 import "server-only";
 import serverEnv from "@/server/lib/env";
-import { KakaoTokenResponse, KakaoUserResponse } from "./kakao.types";
+import { KakaoApi, KakaoTokenResponse } from "./kakao-api.types";
 import clientEnv from "@/client/lib/env";
+import { KakaoUserInfo } from "@/kakao/kakao";
 
-const KakaoApi = {
+const kakaoApi: KakaoApi = {
   fetchUser(accessToken: string) {
     return fetch("https://kapi.kakao.com/v2/user/me", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }).then((response) => response.json() as Promise<KakaoUserResponse>);
+    }).then((response) => response.json() as Promise<KakaoUserInfo>);
   },
 
   fetchToken(code: string) {
@@ -30,4 +31,4 @@ const KakaoApi = {
     ).then((response) => response.json() as Promise<KakaoTokenResponse>);
   },
 };
-export default KakaoApi;
+export default kakaoApi;
