@@ -5,11 +5,14 @@ import clientEnv from "@/client/lib/env";
 import Image from "next/image";
 
 export default function KakaoLoginButton() {
-  const { kakao } = useKakao();
+  const { kakao, isLoaded } = useKakao();
   return (
     <button
       onClick={() => {
-        if (!kakao?.Auth) return;
+        if (!isLoaded)
+          return alert(
+            "카카오 SDK가 로드되지 않았습니다. 잠시 후 다시 시도해주세요."
+          );
         kakao.Auth.authorize({
           redirectUri: clientEnv.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
         });
