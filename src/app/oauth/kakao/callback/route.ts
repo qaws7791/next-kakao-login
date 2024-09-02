@@ -6,7 +6,7 @@ import {
 } from "../../../../../drizzle/queries";
 import { createSession } from "@/server/lib/session";
 import { redirect } from "next/navigation";
-import KakaoApi from "@/kakao/api";
+import kakaoApi from "@/kakao/rest-api/api";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -25,9 +25,9 @@ export async function GET(request: NextRequest) {
     );
   }
   try {
-    const { access_token } = await KakaoApi.fetchToken(code);
+    const { access_token } = await kakaoApi.fetchToken(code);
 
-    const kakaoUser = await KakaoApi.fetchUser(access_token);
+    const kakaoUser = await kakaoApi.fetchUser(access_token);
 
     const existingUser = await selectUserByKakaoId(kakaoUser.id);
     const updatedUser = existingUser
