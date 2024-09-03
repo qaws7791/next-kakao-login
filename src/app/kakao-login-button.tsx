@@ -4,6 +4,11 @@ import { useKakao } from "@/app/kakao-provider";
 import clientEnv from "@/client/lib/env";
 import Image from "next/image";
 
+/**
+ * 카카오 로그인 버튼 컴포넌트.
+ * @description 카카오 SDK가 로드되었는지 확인한 후, 로그인을 시도한다.
+ */
+
 export default function KakaoLoginButton() {
   const { kakao, isLoaded } = useKakao();
   return (
