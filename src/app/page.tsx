@@ -1,4 +1,5 @@
 import KakaoLoginButton from "@/app/kakao-login-button";
+import KakaoLoginLink from "@/app/kakao-login-link";
 import { getUser } from "@/server/lib/user";
 import { redirect } from "next/navigation";
 
@@ -14,6 +15,8 @@ export default async function Home() {
         Nextjs OAuth with Kakao Login
       </h1>
       <KakaoLoginButton />
+      <h2 className="text-xl my-16">or</h2>
+      <KakaoLoginLink />
     </main>
   );
 }
