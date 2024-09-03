@@ -4,7 +4,7 @@ import { Kakao } from "@/kakao/kakao";
 import Script from "next/script";
 import { createContext, useCallback, useContext, useState } from "react";
 
-type kakaoLoginContext =
+type KakaoLoginContext =
   | {
       kakao: Kakao;
       isLoaded: true;
@@ -14,7 +14,7 @@ type kakaoLoginContext =
       isLoaded: false;
     };
 
-const kakaoContext = createContext<kakaoLoginContext | undefined>({
+const kakaoContext = createContext<KakaoLoginContext | undefined>({
   kakao: null,
   isLoaded: false,
 });
