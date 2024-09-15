@@ -11,6 +11,8 @@ import kakaoApi from "@/kakao/rest-api/api";
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
+  const state = url.searchParams.get("state");
+
   if (!code) {
     return new Response(
       JSON.stringify({
@@ -24,6 +26,7 @@ export async function GET(request: NextRequest) {
       }
     );
   }
+  let isError = false;
   try {
     const { access_token } = await kakaoApi.fetchToken(code);
 
@@ -44,8 +47,10 @@ export async function GET(request: NextRequest) {
     }
     createSession(updatedUser.id);
   } catch (error) {
+    isError = true;
     console.error(error);
-  } finally {
-    return redirect("/");
   }
+  return isError
+    ? redirect(`/auth/signin`)
+    : redirect(`/auth/signin/success?state=${state}`);
 }
