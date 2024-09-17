@@ -21,13 +21,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Diagram
 
+- 카카오 로그인(https://kauth.kakao.com/oauth/authorize)으로 이동 전:   previous page url, state 값 저장
+- 로그인 성공 경로(/signin/success)에서 state 값 파싱 후 저장 해둔 값과 일치하면 previous page url을 꺼내서 리디렉션
+
 ```mermaid
 sequenceDiagram
     participant Client as User Client
     participant Server as Service Server
     participant KaKao as KaKao Server
+    Client->>Client: generate state and save state·previous page url
     Note over Client,KaKao: KaKao Login
-    Client->>KaKao: Click kakao login button(call kakao.Auth.authorize())
+    Client->>KaKao: Click kakao login button(move to https://kauth.kakao.com/oauth/authorize)
     KaKao-->>Client: Show authentication, authorization screen
     Client->>KaKao: User completes consent
     KaKao-->>Server: Redirect to RedirectURI(/oauth/kakao/callback)
@@ -40,7 +44,12 @@ sequenceDiagram
         Server->>Server: Register a user
     end
     Note over Client,KaKao: Service login
-    Server->>Client: Create a service session and redirect to service page
+    Server->>Client: Create a service session and redirect to login success page
+    alt state is vaild
+    Client->>Client: Create a service session and redirect to [previous page]
+    else state is invaild
+    Client->>Client: Invalidate a service session and redirect to [service root page]
+    end
 ```
 
 
